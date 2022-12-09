@@ -2,20 +2,16 @@
   {
     "Name": "Question 1",
     "Id": 1,
-    "Text": "This is question 1",
+    "Text": "Where in the project lifecycle is your project currently at",
     "Category": "Lifecycle",
     "Answers": [
       {
         "Name": "New",
-        "Conclusion": "Conclusion A",
-        "Description": "Description A",
         "Value": 1,
         "Meaning": "New"
       },
       {
         "Name": "Existing",
-        "Conclusion": "Conclusion B",
-        "Description": "Description B",
         "Value": 2,
         "Meaning": "Existing"
       }
@@ -24,21 +20,28 @@
   {
     "Name": "Question 2",
     "Id": 2,
-    "Text": "This is question 2",
+    "Text": "Which option best describes how is your application grouped and organised?",
     "Category": "CurrentArchType",
     "Answers": [
       {
-        "Name": "Microservice",
+        "Name": "Repository per an application",
         "Conclusion": "Conclusion A",
         "Description": "Description A",
         "Value": 1,
         "Meaning": "Microservice"
       },
       {
-        "Name": "Monolith",
+        "Name": "Repository per a group of applications",
+        "Conclusion": "Conclusion A",
+        "Description": "Description A",
+        "Value": 2,
+        "Meaning": "Microservice"
+      },
+      {
+        "Name": "One repository with all applications",
         "Conclusion": "Conclusion B",
         "Description": "Description B",
-        "Value": 2,
+        "Value": 3,
         "Meaning": "Monolith"
       }
     ]
@@ -46,21 +49,28 @@
   {
     "Name": "Question 3",
     "Id": 3,
-    "Text": "This is question 3",
+    "Text": "Which option best describes the most granular deployment you can do",
     "Category": "CurrentArchType",
     "Answers": [
       {
-        "Name": "Microservice",
+        "Name": "Every applications can be deployed individually",
         "Conclusion": "Conclusion A",
         "Description": "Description A",
         "Value": 1,
         "Meaning": "Microservice"
       },
       {
-        "Name": "Monolith",
+        "Name": "Groups of applications can be deployed together",
+        "Conclusion": "Conclusion A",
+        "Description": "Description A",
+        "Value": 2,
+        "Meaning": "Microservice"
+      },
+      {
+        "Name": "All applications need to be deployed as one unit",
         "Conclusion": "Conclusion B",
         "Description": "Description B",
-        "Value": 2,
+        "Value": 3,
         "Meaning": "Monolith"
       }
     ]
@@ -68,22 +78,51 @@
   {
     "Name": "Question 4",
     "Id": 4,
-    "Text": "This is question 4",
+    "Text": "How likely are your requirements going to change in the future?",
     "Category": "MicroserviceSuitability",
     "Answers": [
       {
-        "Name": "Suitable",
-        "Conclusion": "Conclusion A",
+        "Name": "Unlikely",
+        "Conclusion": "As your requirements are unlikely to change there is less benifit in a microservice design.",
         "Description": "Description A",
         "Value": 1,
+        "Meaning": "NotSuitable"
+      },
+      {
+        "Name": "Very likely",
+        "Conclusion": "As your requirements are likely to change this may be better suited to a microservice design.",
+        "Description": "Description B",
+        "Value": 2,
+        "Meaning": "Suitable"
+      }
+    ]
+  },
+  {
+    "Name": "Question 5",
+    "Id": 5,
+    "Text": "How long is the expected lifespan of your project ",
+    "Category": "MicroserviceSuitability",
+    "Answers": [
+      {
+        "Name": "Short lifespan (1 year and under)",
+        "Conclusion": "As the lifespan of your project is under a year, it may not be worth the additional work of breaking it up into modules ",
+        "Description": "Description A",
+        "Value": 1,
+        "Meaning": "NotSuitable"
+      },
+      {
+        "Name": "Medium lifespan (1 - 3 years)",
+        "Conclusion": "Conclusion A",
+        "Description": "Description A",
+        "Value": 2,
         "Meaning": "Suitable"
       },
       {
-        "Name": "Not Suitable",
-        "Conclusion": "Conclusion B",
+        "Name": "Long lifespan (3+ years)",
+        "Conclusion": "As your are conducting a project that is 3 years or longer, the investment in a microservice approach could allow for easier maintenance, faster deployments and modular scaling",
         "Description": "Description B",
-        "Value": 2,
-        "Meaning": "NotSuitable"
+        "Value": 3,
+        "Meaning": "Suitable"
       }
     ]
   }
