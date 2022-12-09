@@ -1,0 +1,149 @@
+﻿@page "/Old"
+@using MicroserviceAdvisor.Shared
+@using MicroserviceAdvisor.Client.Enums
+@using System.ComponentModel.DataAnnotations
+@inject HttpClient Http
+
+@if (Questions == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @foreach (var Question in Questions)
+    {
+        <div style="display:block">
+        <h1>@Question.Name</h1>
+        <p>@Question.Text</p>
+        @foreach (var Answer in Question.Answers)
+            {
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="@Question.Name" id="@Question.Name+@Answer.Name" value="@Answer.Value">
+                    <label class="form-check-label" for="@Question.Name+@Answer.Name">@Answer.Value</label>
+                </div> 
+            }
+        </div>
+@*
+        @for(int i = 0; i< Questions.Length;i++)
+        {
+        var ii = i;
+        <InputRadioGroup @bind-Value="myFormModel.Answers[ii]">
+            <div style="display:block">
+            <h1>@Questions[ii].Name</h1>
+            <p>@Questions[ii].Text</p>
+            @foreach (var Answer in Questions[ii].Answers)
+                {
+                    <div class="form-check form-check-inline">
+                        <InputRadio Value="@Answer.Value"/>
+                    </div> 
+                }
+            </div>
+        </InputRadioGroup>
+        }*@
+    }
+}
+
+<AutoSaveEditForm Id="form-one" Model="myFormModel" StorageType="@Enums.StorageType.LocalStorage" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">First name</label>
+        <InputText @bind-Value="myFormModel.FirstName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Last name</label>
+        <InputText @bind-Value="myFormModel.LastName" class="form-control" />
+    </div>
+
+
+
+    <InputRadioGroup @bind-Value="myFormModel.StorageType">
+        Manufacturer:
+        <br>
+        @foreach (var manufacturer in (StorageType[])Enum
+            .GetValues(typeof(StorageType)))
+        {
+            <InputRadio Value="@manufacturer" />
+            <text>&nbsp;</text>@manufacturer<br>
+        }
+    </InputRadioGroup>
+
+
+
+    @if (Questions == null ||myFormModel.Answers == null )
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+
+        @for(int i = 0; i< Questions.Length;i++)
+        {
+        var ii = i;
+        <InputRadioGroup @bind-Value="myFormModel.Answers[ii].Value">
+            <div style="display:block">
+            <h1>@Questions[ii].Name</h1>
+            <p>@Questions[ii].Text</p>
+            @foreach (var Answer in Questions[ii].Answers)
+                {
+                    <div class="form-check form-check-inline">
+                        <InputRadio Value="@Answer.Value"/>
+                        <text>&nbsp;</text>@Answer.Value<br>
+                    </div> 
+                }
+            </div>
+        </InputRadioGroup>
+        }
+    }
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+</AutoSaveEditForm>
+
+
+@code {
+    private Question[]? Questions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Questions = await Http.GetFromJsonAsync<Question[]>("Questions");
+        if (myFormModel.Answers == null)
+        {
+           myFormModel.Answers= new FormAnswer[]
+            {
+            new FormAnswer{Value=0},
+            new FormAnswer{Value=0},
+            new FormAnswer{Value=0},
+            new FormAnswer{Value=0}
+            }; 
+        }
+    }
+
+    private MyFormModel myFormModel = new MyFormModel();
+
+    public class MyFormModel
+    {
+        [System.ComponentModel.DataAnnotations.Required]
+        public string FirstName { get; set; }
+        [System.ComponentModel.DataAnnotations.Required]
+        public string LastName { get; set; }
+
+        [Required, EnumDataType(typeof(StorageType))]
+        public StorageType? StorageType { get; set; } = null;
+
+        public FormAnswer[] Answers { get; set; }
+
+
+    }
+
+    public class FormAnswer
+    {
+        public int Value { get; set; }
+    }
+
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine($"Form Submitted For: {myFormModel.FirstName} {myFormModel.LastName}");
+        myFormModel = new MyFormModel();
+    }
+}

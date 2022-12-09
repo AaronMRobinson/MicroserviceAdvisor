@@ -1,0 +1,321 @@
+﻿@page "/QuestionsPage"
+@using MicroserviceAdvisor.Shared.Enums
+@using MicroserviceAdvisor.Shared
+@using MicroserviceAdvisor.Client.Enums
+@using System.ComponentModel.DataAnnotations
+@using MicroserviceAdvisor.Shared.Enums
+@using Newtonsoft.Json
+@inject HttpClient Http
+
+@if(questionaireModel.ProjetLifecycleStatus == ProjetLifecycle.Unknown)
+{
+    <AutoSaveEditForm Id="lifeCycle" Model="questionaireModel" StorageType="@Enums.StorageType.SessionStorage" OnValidSubmit="SubmitLifeCycle">
+        <DataAnnotationsValidator />
+        @if (Questions == null || questionaireModel.LifeCycleAnswers == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            @for (int i = 0; i < LifeCycleQuestions.Length; i++)
+            {
+                var ii = i;
+                <InputRadioGroup @bind-Value="questionaireModel.LifeCycleAnswers[ii].Value">
+                    <div style="display:block">
+                        <h1>@LifeCycleQuestions[ii].Name</h1>
+                        <p>@LifeCycleQuestions[ii].Text</p>
+                        @foreach (var Answer in LifeCycleQuestions[ii].Answers)
+                        {
+                            <div class="form-check form-check-inline">
+                                <InputRadio Value="@Answer.Value" />
+                                <text>&nbsp;</text>@Answer.Name<br>
+                            </div>
+                        }
+                    </div>
+                </InputRadioGroup>
+            }
+        }
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </AutoSaveEditForm>
+}
+else
+{
+    @if (questionaireModel.ProjetLifecycleStatus == ProjetLifecycle.Existing && questionaireModel.CurrentProjectArchStatus == CurrentProjectArch.Unknown)
+    {
+        <AutoSaveEditForm Id="arch-type" Model="questionaireModel" StorageType="@Enums.StorageType.SessionStorage" OnValidSubmit="SubmitCurrentArchType">
+            <DataAnnotationsValidator />
+            @if (CurrentArchTypeQuestions == null || questionaireModel.CurrentArchAnswers == null)
+            {
+                <p><em>Loading...</em></p>
+            }
+            else
+            {
+                @for (int i = 0; i < CurrentArchTypeQuestions.Length; i++)
+                {
+                    var ii = i;
+                    <InputRadioGroup @bind-Value="questionaireModel.CurrentArchAnswers[ii].Value">
+                        <div style="display:block">
+                            <h1>@CurrentArchTypeQuestions[ii].Name</h1>
+                            <p>@CurrentArchTypeQuestions[ii].Text</p>
+                            @foreach (var Answer in CurrentArchTypeQuestions[ii].Answers)
+                            {
+                                <div class="form-check form-check-inline">
+                                    <InputRadio Value="@Answer.Value" />
+                                    <text>&nbsp;</text>@Answer.Name<br>
+                                </div>
+                            }
+                        </div>
+                    </InputRadioGroup>
+                }
+            }
+
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </AutoSaveEditForm>
+    }
+    @if (questionaireModel.MicroserviceSuitabilityStatus == MicroserviceSuitability.Unknown && ((questionaireModel.CurrentProjectArchStatus == CurrentProjectArch.Unknown && questionaireModel.ProjetLifecycleStatus == ProjetLifecycle.New )|| (questionaireModel.CurrentProjectArchStatus != CurrentProjectArch.Unknown && questionaireModel.ProjetLifecycleStatus == ProjetLifecycle.Existing )))
+    {
+        <AutoSaveEditForm Id="sutability" Model="questionaireModel" StorageType="@Enums.StorageType.SessionStorage" OnValidSubmit="SubmitSutability">
+            <DataAnnotationsValidator />
+            @if (MicroserviceSuitabilityQuestions == null || questionaireModel.MicroserviceSuitabilityAnswers == null)
+            {
+                <p><em>Loading...</em></p>
+            }
+            else
+            {
+                @for (int i = 0; i < MicroserviceSuitabilityQuestions.Length; i++)
+                {
+                    var ii = i;
+                    <InputRadioGroup @bind-Value="questionaireModel.MicroserviceSuitabilityAnswers[ii].Value">
+                        <div style="display:block">
+                            <h1>@MicroserviceSuitabilityQuestions[ii].Name</h1>
+                            <p>@MicroserviceSuitabilityQuestions[ii].Text</p>
+                            @foreach (var Answer in MicroserviceSuitabilityQuestions[ii].Answers)
+                            {
+                                <div class="form-check form-check-inline">
+                                    <InputRadio Value="@Answer.Value" />
+                                    <text>&nbsp;</text>@Answer.Name<br>
+                                </div>
+                            }
+                        </div>
+                    </InputRadioGroup>
+                }
+            }
+
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </AutoSaveEditForm>
+    }
+}
+@if(questionaireModel.MicroserviceSuggestion != SuggestionType.Unknown)
+{
+    <h1>Results</h1>
+
+    <h2>What your project currently is</h2>
+
+    <p>Based on your answers it appears that your project is
+        @if(questionaireModel.ProjetLifecycleStatus == ProjetLifecycle.New)
+        {
+            <span>a new project, so you have the power to decide what design approach is best before you start.</span>
+        }
+        else
+        {
+            <span>an existing project that appears to be some form of </span>
+            @if(questionaireModel.CurrentProjectArchStatus== CurrentProjectArch.Microservice)
+            {
+                <span>microservices.</span>
+            }
+            else if(questionaireModel.CurrentProjectArchStatus== CurrentProjectArch.Monolith)
+            {
+                <span>Monolith.</span>
+            }
+        }
+    </p>
+
+    <h2>Your projects current suitability to microservices</h2>
+    <p>Based on analysis of your answers overall your project 
+            
+        @if(questionaireModel.MicroserviceSuitabilityStatus== MicroserviceSuitability.Suitable)
+        {
+            <span>does appear to be suitable for microservices </span>
+                <p>The reasons for this are</p>
+            <ul>
+                @foreach(var reason in questionaireModel.ReasonsWhy)
+                {
+                    <li>@reason</li>
+                }   
+            </ul>
+            if (questionaireModel.ReasonsWhyNot.Any())
+            {
+                <p>But these are factors that could hinder the potential of the microservice</p>
+
+                <ul>
+                    @foreach(var reasonWhyNot in questionaireModel.ReasonsWhyNot)
+                    {
+                        <li>@reasonWhyNot</li>
+                    }   
+                </ul>
+            }
+        }
+        else
+        {
+            <span>does not appear to be suitable for microservices</span>
+            <p>The reasons for this are</p>
+            <ul>
+                @foreach(var reasonWhyNot in questionaireModel.ReasonsWhyNot)
+                {
+                    <li>reasonWhyNot</li>
+                }   
+            </ul>
+            if (questionaireModel.ReasonsWhy.Any())
+            {
+                <p>But these factors are generally more geared to microservices</p>
+                <ul>
+                    @foreach (var reason in questionaireModel.ReasonsWhy)
+                    {
+                        <li>@reason</li>
+                    }   
+                </ul>
+            }
+        }
+        </p>
+
+    <h2>Recommendations for your project</h2>
+    <p>Our recommendation to your project is that</p>
+
+    @switch (questionaireModel.MicroserviceSuggestion)
+    {
+        case SuggestionType.BuildAMicroservice:
+            <p>BuildAMicroservice</p>
+            break;
+        case SuggestionType.BuildAMonolith:
+            <p>BuildAMonolith</p>
+            break;
+        case SuggestionType.MergeMicroservice:
+            <p>MergeMicroservice</p>
+            break;
+        case SuggestionType.PotentialMicroservicesImprovements:
+            <p>PotentialMicroservicesImprovements</p>
+            break;
+        case SuggestionType.StayAMonolith:
+            <p>StayAMonolith</p>
+            break;
+        case SuggestionType.TransformIntoAMicroservice:
+            <p>TransformIntoAMicroservice</p>
+            break;
+        default:
+            <p>Sorry, based on your answers we were unable to provide a suggestion.</p>
+            break;
+    }
+}
+
+@code {
+    private Question[]? Questions;
+    private Question[]? LifeCycleQuestions;
+    private Question[]? CurrentArchTypeQuestions;
+    private Question[]? MicroserviceSuitabilityQuestions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Questions = await Http.GetFromJsonAsync<Question[]>("Questions");
+
+        LifeCycleQuestions = Questions.Where(o => o.Category == QuestionCategory.Lifecycle).ToArray();
+        CurrentArchTypeQuestions = Questions.Where(o => o.Category == QuestionCategory.CurrentArchType).ToArray();
+        MicroserviceSuitabilityQuestions = Questions.Where(o => o.Category == QuestionCategory.MicroserviceSuitability).ToArray();
+        questionaireModel.ReasonsWhy = new List<string>();
+        questionaireModel.ReasonsWhyNot = new List<string>();
+
+        if (questionaireModel.LifeCycleAnswers == null)
+        {
+            questionaireModel.LifeCycleAnswers = new List<Answer>();
+            foreach (var question in LifeCycleQuestions)
+            {
+                questionaireModel.LifeCycleAnswers.Add(new Answer()
+                {
+                    QuestionId = question.Id,
+                    questionCategory = question.Category,
+                    Value = 0
+                });
+            }  
+        }
+        if (questionaireModel.CurrentArchAnswers == null)
+        {
+            questionaireModel.CurrentArchAnswers = new List<Answer>();
+            foreach (var question in CurrentArchTypeQuestions)
+            {
+                questionaireModel.CurrentArchAnswers.Add(new Answer()
+                {
+                    QuestionId = question.Id,
+                    questionCategory = question.Category,
+                    Value = 0
+                });
+            }  
+        }
+        if (questionaireModel.MicroserviceSuitabilityAnswers == null)
+        {
+            questionaireModel.MicroserviceSuitabilityAnswers = new List<Answer>();
+            foreach (var question in MicroserviceSuitabilityQuestions)
+            {
+                questionaireModel.MicroserviceSuitabilityAnswers.Add(new Answer()
+                {
+                    QuestionId = question.Id,
+                    questionCategory = question.Category,
+                    Value = 0
+                });
+            }  
+        }
+    }
+
+    private QuestionaireModel questionaireModel = new QuestionaireModel();
+
+    public class QuestionaireModel
+    {
+        [System.ComponentModel.DataAnnotations.Required]
+        public List<Answer> LifeCycleAnswers { get; set; }
+
+        public List<Answer> CurrentArchAnswers { get; set; }
+
+        public List<Answer> MicroserviceSuitabilityAnswers { get; set; }
+
+        public ProjetLifecycle ProjetLifecycleStatus { get; set; }
+
+        public CurrentProjectArch CurrentProjectArchStatus { get; set; }
+
+        public MicroserviceSuitability MicroserviceSuitabilityStatus { get; set; }
+
+        public SuggestionType MicroserviceSuggestion { get; set; }
+
+        public List<string>? ReasonsWhy { get; set; }
+
+        public List<string>? ReasonsWhyNot { get; set; }
+    }
+
+    public class Answer
+    {
+        public int QuestionId { get; set; }
+        public int Value { get; set; }
+        public QuestionCategory questionCategory { get; set; }
+    }
+
+    private async Task SubmitLifeCycle()
+    {
+        var response = await Http.PostAsJsonAsync<QuestionaireModel>("Questions/Lifecycle",questionaireModel);
+        var resultString = await response.Content.ReadAsStringAsync();
+        var result = JsonConvert.DeserializeObject<QuestionaireModel>(resultString);
+        questionaireModel = result;
+    }
+
+    private async Task SubmitCurrentArchType()
+    {
+        var response = await Http.PostAsJsonAsync<QuestionaireModel>("Questions/CurrentArchType",questionaireModel);
+        var resultString = await response.Content.ReadAsStringAsync();
+        var result = JsonConvert.DeserializeObject<QuestionaireModel>(resultString);
+        questionaireModel = result;
+    }
+
+    private async Task SubmitSutability()
+    {
+        var response = await Http.PostAsJsonAsync<QuestionaireModel>("Questions/Results",questionaireModel);
+        var resultString = await response.Content.ReadAsStringAsync();
+        var result = JsonConvert.DeserializeObject<QuestionaireModel>(resultString);
+        questionaireModel = result;
+    }
+}

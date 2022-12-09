@@ -1,0 +1,90 @@
+[
+  {
+    "Name": "Question 1",
+    "Id": 1,
+    "Text": "This is question 1",
+    "Category": "Lifecycle",
+    "Answers": [
+      {
+        "Name": "New",
+        "Conclusion": "Conclusion A",
+        "Description": "Description A",
+        "Value": 1,
+        "Meaning": "New"
+      },
+      {
+        "Name": "Existing",
+        "Conclusion": "Conclusion B",
+        "Description": "Description B",
+        "Value": 2,
+        "Meaning": "Existing"
+      }
+    ]
+  },
+  {
+    "Name": "Question 2",
+    "Id": 2,
+    "Text": "This is question 2",
+    "Category": "CurrentArchType",
+    "Answers": [
+      {
+        "Name": "Microservice",
+        "Conclusion": "Conclusion A",
+        "Description": "Description A",
+        "Value": 1,
+        "Meaning": "Microservice"
+      },
+      {
+        "Name": "Monolith",
+        "Conclusion": "Conclusion B",
+        "Description": "Description B",
+        "Value": 2,
+        "Meaning": "Monolith"
+      }
+    ]
+  },
+  {
+    "Name": "Question 3",
+    "Id": 3,
+    "Text": "This is question 3",
+    "Category": "CurrentArchType",
+    "Answers": [
+      {
+        "Name": "Microservice",
+        "Conclusion": "Conclusion A",
+        "Description": "Description A",
+        "Value": 1,
+        "Meaning": "Microservice"
+      },
+      {
+        "Name": "Monolith",
+        "Conclusion": "Conclusion B",
+        "Description": "Description B",
+        "Value": 2,
+        "Meaning": "Monolith"
+      }
+    ]
+  },
+  {
+    "Name": "Question 4",
+    "Id": 4,
+    "Text": "This is question 4",
+    "Category": "MicroserviceSuitability",
+    "Answers": [
+      {
+        "Name": "Suitable",
+        "Conclusion": "Conclusion A",
+        "Description": "Description A",
+        "Value": 1,
+        "Meaning": "Suitable"
+      },
+      {
+        "Name": "Not Suitable",
+        "Conclusion": "Conclusion B",
+        "Description": "Description B",
+        "Value": 2,
+        "Meaning": "NotSuitable"
+      }
+    ]
+  }
+]
