@@ -18,7 +18,7 @@
     ]
   },
   {
-    "Name": "Question 2",
+    "Name": "Question 1",
     "Id": 2,
     "Text": "Which option best describes how is your application grouped and organised?",
     "Category": "CurrentArchType",
@@ -47,7 +47,7 @@
     ]
   },
   {
-    "Name": "Question 3",
+    "Name": "Question 2",
     "Id": 3,
     "Text": "Which option best describes the most granular deployment you can do",
     "Category": "CurrentArchType",
@@ -76,21 +76,21 @@
     ]
   },
   {
-    "Name": "Question 4",
+    "Name": "Question 1",
     "Id": 4,
     "Text": "How likely are your requirements going to change in the future?",
     "Category": "MicroserviceSuitability",
     "Answers": [
       {
         "Name": "Unlikely",
-        "Conclusion": "As your requirements are unlikely to change there is less benifit in a microservice design.",
+        "Conclusion": "As your requirements are unlikely to change, there is less of the benifit gained from a microservice design.",
         "Description": "Description A",
         "Value": 1,
         "Meaning": "NotSuitable"
       },
       {
         "Name": "Very likely",
-        "Conclusion": "As your requirements are likely to change this may be better suited to a microservice design.",
+        "Conclusion": "As your requirements are likely to change, a microservice design may better suited to quickly adapting to change.",
         "Description": "Description B",
         "Value": 2,
         "Meaning": "Suitable"
@@ -98,31 +98,229 @@
     ]
   },
   {
-    "Name": "Question 5",
+    "Name": "Question 2",
     "Id": 5,
     "Text": "How long is the expected lifespan of your project ",
     "Category": "MicroserviceSuitability",
     "Answers": [
       {
         "Name": "Short lifespan (1 year and under)",
-        "Conclusion": "As the lifespan of your project is under a year, it may not be worth the additional work of breaking it up into modules ",
+        "Conclusion": "As the lifespan of your project is under a year, it may not be worth the additional work of breaking up your solution into modules",
         "Description": "Description A",
         "Value": 1,
         "Meaning": "NotSuitable"
       },
       {
         "Name": "Medium lifespan (1 - 3 years)",
-        "Conclusion": "Conclusion A",
+        "Conclusion": "As you are conducting a projecty with a lifespan between 1 and 3 years it may still be worth breaking it up into microservices, but the longer the lifespan the more value added.",
         "Description": "Description A",
         "Value": 2,
         "Meaning": "Suitable"
       },
       {
         "Name": "Long lifespan (3+ years)",
-        "Conclusion": "As your are conducting a project that is 3 years or longer, the investment in a microservice approach could allow for easier maintenance, faster deployments and modular scaling",
+        "Conclusion": "As you are conducting a project that is 3 years or longer, the investment in a microservice approach could allow for easier maintenance, faster deployments and modular scaling",
         "Description": "Description B",
         "Value": 3,
         "Meaning": "Suitable"
+      }
+    ]
+  },
+  {
+    "Name": "Question 3",
+    "Id": 6,
+    "Text": "Is / will the application you are building part of a bigger eco system of applications or independent",
+    "Category": "MicroserviceSuitability",
+    "Answers": [
+      {
+        "Name": "Independent",
+        "Conclusion": "As the application you are building is independent with no direct connection to other applications it may be easier to build it as a more monolithic solution.",
+        "Description": "Description A",
+        "Value": 1,
+        "Meaning": "NotSuitable"
+      },
+      {
+        "Name": "Part of a bigger eco system of applicationd",
+        "Conclusion": "As the application you are building is part of a wider suite of inter-connected applications it could be more valuable to develop the project as microservices.",
+        "Description": "Description A",
+        "Value": 2,
+        "Meaning": "Suitable"
+      }
+    ]
+  },
+  {
+    "Name": "Question 4",
+    "Id": 7,
+    "Text": "Do you need your applications components to be individually scalable.",
+    "Category": "MicroserviceSuitability",
+    "Answers": [
+      {
+        "Name": "I do need individual components to be individually scalled",
+        "Conclusion": "As the application you are building needs to be individually scaled it should be built using a microservice approach.",
+        "Description": "Description A",
+        "Value": 1,
+        "Meaning": "Suitable"
+      },
+      {
+        "Name": "All components can scale together",
+        "Conclusion": "As the application you are building does not need to be individualy scalled, a monolith approach would still be suitable.",
+        "Description": "Description A",
+        "Value": 2,
+        "Meaning": "NotSuitable"
+      }
+    ]
+  },
+  {
+    "Name": "Question 5",
+    "Id": 8,
+    "Text": "How skilled is the team in building and designing microservices?",
+    "Category": "MicroserviceSuitability",
+    "Answers": [
+      {
+        "Name": "Highly skilled",
+        "Conclusion": "As your projects team are highly skilled in building microservices the chance of your team successfully building a microservice is high.",
+        "Description": "Description A",
+        "Value": 1,
+        "Meaning": "Suitable"
+      },
+      {
+        "Name": "Not highly skilled",
+        "Conclusion": "As your projects team are not highly skilled in building microservices the chance of your team successfully building a microservice is lower.You may need to upskill.",
+        "Description": "Description A",
+        "Value": 2,
+        "Meaning": "NotSuitable"
+      }
+    ]
+  },
+  {
+    "Name": "Question 6",
+    "Id": 9,
+    "Text": "Do you have sufficient architectural team capacity to iteratively adapt architectural designs based on change?",
+    "Category": "MicroserviceSuitability",
+    "Answers": [
+      {
+        "Name": "Good architectural capacity",
+        "Conclusion": "As your project has sufficient capacity to handle iterative architectural change it would be able to handle a microservice approach where more architectural updates are likely.",
+        "Description": "Description A",
+        "Value": 1,
+        "Meaning": "Suitable"
+      },
+      {
+        "Name": "Low architectuaral capacity",
+        "Conclusion": "As your project does not have sufficient capacity to handle iterative architectural change it be more likely to struggle keeping up with microservice iterative improvements.",
+        "Description": "Description A",
+        "Value": 2,
+        "Meaning": "NotSuitable"
+      }
+    ]
+  },
+  {
+    "Name": "Question 7",
+    "Id": 10,
+    "Text": "What best describes the size of your project?",
+    "Category": "MicroserviceSuitability",
+    "Answers": [
+      {
+        "Name": "Small project",
+        "Conclusion": "As your project is a smaller project it could be a more efficient use to time to make it monolithic.",
+        "Description": "Description A",
+        "Value": 1,
+        "Meaning": "NotSuitable"
+      },
+      {
+        "Name": "Large project",
+        "Conclusion": "As your project is a larger project it would be more likely to benefit from a microservice architecture so that it can scale out across applications.",
+        "Description": "Description A",
+        "Value": 2,
+        "Meaning": "Suitable"
+      }
+    ]
+  },
+  {
+    "Name": "Question 8",
+    "Id": 11,
+    "Text": "What best describes the structure of your team working on the project",
+    "Category": "MicroserviceSuitability",
+    "Answers": [
+      {
+        "Name": "One team building the entire appication",
+        "Conclusion": "As your project is ran within one team a monolith approach would still be suitable.",
+        "Description": "Description A",
+        "Value": 1,
+        "Meaning": "NotSuitable"
+      },
+      {
+        "Name": "Multiple teams working on multiple parts of the app",
+        "Conclusion": "As your project is ran in multiple sub-teams a microservice approach could make it easier for multiple teams to work together to build an application.",
+        "Description": "Description A",
+        "Value": 2,
+        "Meaning": "Suitable"
+      }
+    ]
+  },
+  {
+    "Name": "Question 9",
+    "Id": 12,
+    "Text": "Does your project use proprietory technologies?",
+    "Category": "MicroserviceSuitability",
+    "Answers": [
+      {
+        "Name": "Yes my project does use proprietory technologies",
+        "Conclusion": "As your project uses proprietory technologies a microservice approach may not be suitable.",
+        "Description": "Description A",
+        "Value": 1,
+        "Meaning": "NotSuitable"
+      },
+      {
+        "Name": "No my project does not use proprietary technologies",
+        "Conclusion": "As your project does not use proprietory technologies, microservices would be more suitable.",
+        "Description": "Description A",
+        "Value": 2,
+        "Meaning": "Suitable"
+      }
+    ]
+  },
+  {
+    "Name": "Question 10",
+    "Id": 13,
+    "Text": "Does your project use agile methodologies?",
+    "Category": "MicroserviceSuitability",
+    "Answers": [
+      {
+        "Name": "Yes my project uses agile methodologies",
+        "Conclusion": "Microservices are better suited within agile environments.",
+        "Description": "Description A",
+        "Value": 1,
+        "Meaning": "Suitable"
+      },
+      {
+        "Name": "No my project uses agile methodologies",
+        "Conclusion": "Agile methdodologies are better suited to the use of microservices.",
+        "Description": "Description A",
+        "Value": 2,
+        "Meaning": "NotSuitable"
+      }
+    ]
+  },
+  {
+    "Name": "Question 11",
+    "Id": 14,
+    "Text": "How frequent do you want/expect to have deployment",
+    "Category": "MicroserviceSuitability",
+    "Answers": [
+      {
+        "Name": "3 weeks or under",
+        "Conclusion": "Projects with frequent deployments will find that microservices allows for smoother small deployments.",
+        "Description": "Description A",
+        "Value": 1,
+        "Meaning": "Suitable"
+      },
+      {
+        "Name": "Over 4 weeks",
+        "Conclusion": "It is less imporant to be a microservice for projects that don't have frequent deployments.",
+        "Description": "Description A",
+        "Value": 2,
+        "Meaning": "NotSuitable"
       }
     ]
   }

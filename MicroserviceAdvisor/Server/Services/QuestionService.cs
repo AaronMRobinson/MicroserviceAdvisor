@@ -19,16 +19,16 @@ namespace MicroserviceAdvisor.Server.Services
         {
             var questions = GetQuestions();
             var reasonsForMicroservice = new List<string>();
-            var reasonsAginstMicroservice = new List<string>();
+            var reasonsAgainstMicroservice = new List<string>();
 
-            QuestionaireModel.MicroserviceSuitabilityStatus = SuitabilityAnalyser(QuestionaireModel, questions, out reasonsForMicroservice, out reasonsAginstMicroservice);
+            QuestionaireModel.MicroserviceSuitabilityStatus = SuitabilityAnalyser(QuestionaireModel, questions, out reasonsForMicroservice, out reasonsAgainstMicroservice);
             return new Result
             {
                 CurrentProjectArch = QuestionaireModel.CurrentProjectArchStatus,
                 ProjetLifecycle = QuestionaireModel.ProjetLifecycleStatus,
                 MicroserviceSuitability = QuestionaireModel.MicroserviceSuitabilityStatus,
                 ReasonsWhy = reasonsForMicroservice,
-                ReasonsWhyNot = reasonsAginstMicroservice,
+                ReasonsWhyNot = reasonsAgainstMicroservice,
                 SuggestionType = SuggestionAnalyser(QuestionaireModel),
                 ReasonsForTheSuggestion = new List<string> { "", "" }
             };
@@ -88,13 +88,13 @@ namespace MicroserviceAdvisor.Server.Services
             return projetLifecycle;
         }
 
-        private static MicroserviceSuitability SuitabilityAnalyser(QuestionaireModel QuestionaireModel, List<Question>? questions, out List<string>reasonsForMicroservice,out List<string>reasonsAginstMicroservice)
+        private static MicroserviceSuitability SuitabilityAnalyser(QuestionaireModel QuestionaireModel, List<Question>? questions, out List<string>reasonsForMicroservice,out List<string>reasonsAgainstMicroservice)
         {
             var suitableTally = 0;
             var notSuitableTally = 0;
             var microserviceSuitability = MicroserviceSuitability.Unknown;
             reasonsForMicroservice = new List<string>();
-            reasonsAginstMicroservice  = new List<string>();
+            reasonsAgainstMicroservice  = new List<string>();
 
             foreach (var currentArchAnswer in QuestionaireModel.MicroserviceSuitabilityAnswers)
             {
@@ -114,7 +114,7 @@ namespace MicroserviceAdvisor.Server.Services
                     else if (microserviceSuitability == MicroserviceSuitability.NotSuitable)
                     {
                         notSuitableTally++;
-                        reasonsAginstMicroservice.Add(answer.Conclusion);
+                        reasonsAgainstMicroservice.Add(answer.Conclusion);
                     }
                 }
             }

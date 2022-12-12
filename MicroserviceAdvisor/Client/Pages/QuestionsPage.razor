@@ -1,4 +1,5 @@
 ﻿@page "/QuestionsPage"
+@using MicroserviceAdvisor.Client.CustomValidation
 @using MicroserviceAdvisor.Shared.Enums
 @using MicroserviceAdvisor.Shared
 @using MicroserviceAdvisor.Client.Enums
@@ -9,8 +10,11 @@
 
 @if(questionaireModel.ProjetLifecycleStatus == ProjetLifecycle.Unknown)
 {
+    <h1>Your projects lifecycle</h1>
+    <hr />
     <AutoSaveEditForm Id="lifeCycle" Model="questionaireModel" StorageType="@Enums.StorageType.SessionStorage" OnValidSubmit="SubmitLifeCycle">
         <DataAnnotationsValidator />
+        <ValidationSummary />
         @if (Questions == null || questionaireModel.LifeCycleAnswers == null)
         {
             <p><em>Loading...</em></p>
@@ -22,7 +26,7 @@
                 var ii = i;
                 <InputRadioGroup @bind-Value="questionaireModel.LifeCycleAnswers[ii].Value">
                     <div style="display:block">
-                        <h1>@LifeCycleQuestions[ii].Name</h1>
+                        <h2>@LifeCycleQuestions[ii].Name</h2>
                         <p>@LifeCycleQuestions[ii].Text</p>
                         @foreach (var Answer in LifeCycleQuestions[ii].Answers)
                         {
@@ -33,8 +37,10 @@
                         }
                     </div>
                 </InputRadioGroup>
+                <br />
             }
         }
+        <br>
         <button class="btn btn-primary" type="submit">Submit</button>
     </AutoSaveEditForm>
 }
@@ -42,8 +48,11 @@ else
 {
     @if (questionaireModel.ProjetLifecycleStatus == ProjetLifecycle.Existing && questionaireModel.CurrentProjectArchStatus == CurrentProjectArch.Unknown)
     {
+        <h1>Is your project a microservice or monolithic?</h1>
+        <hr />
         <AutoSaveEditForm Id="arch-type" Model="questionaireModel" StorageType="@Enums.StorageType.SessionStorage" OnValidSubmit="SubmitCurrentArchType">
             <DataAnnotationsValidator />
+            <ValidationSummary />
             @if (CurrentArchTypeQuestions == null || questionaireModel.CurrentArchAnswers == null)
             {
                 <p><em>Loading...</em></p>
@@ -55,7 +64,7 @@ else
                     var ii = i;
                     <InputRadioGroup @bind-Value="questionaireModel.CurrentArchAnswers[ii].Value">
                         <div style="display:block">
-                            <h1>@CurrentArchTypeQuestions[ii].Name</h1>
+                            <h2>@CurrentArchTypeQuestions[ii].Name</h2>
                             <p>@CurrentArchTypeQuestions[ii].Text</p>
                             @foreach (var Answer in CurrentArchTypeQuestions[ii].Answers)
                             {
@@ -66,16 +75,20 @@ else
                             }
                         </div>
                     </InputRadioGroup>
+                    <br />
                 }
             }
-
+            <br>
             <button class="btn btn-primary" type="submit">Submit</button>
         </AutoSaveEditForm>
     }
     @if (questionaireModel.MicroserviceSuitabilityStatus == MicroserviceSuitability.Unknown && ((questionaireModel.CurrentProjectArchStatus == CurrentProjectArch.Unknown && questionaireModel.ProjetLifecycleStatus == ProjetLifecycle.New )|| (questionaireModel.CurrentProjectArchStatus != CurrentProjectArch.Unknown && questionaireModel.ProjetLifecycleStatus == ProjetLifecycle.Existing )))
     {
+        <h1>Your projects suitability to microservices</h1>
+        <hr />
         <AutoSaveEditForm Id="sutability" Model="questionaireModel" StorageType="@Enums.StorageType.SessionStorage" OnValidSubmit="SubmitSutability">
             <DataAnnotationsValidator />
+            <ValidationSummary />
             @if (MicroserviceSuitabilityQuestions == null || questionaireModel.MicroserviceSuitabilityAnswers == null)
             {
                 <p><em>Loading...</em></p>
@@ -87,7 +100,7 @@ else
                     var ii = i;
                     <InputRadioGroup @bind-Value="questionaireModel.MicroserviceSuitabilityAnswers[ii].Value">
                         <div style="display:block">
-                            <h1>@MicroserviceSuitabilityQuestions[ii].Name</h1>
+                            <h2>@MicroserviceSuitabilityQuestions[ii].Name</h2>
                             <p>@MicroserviceSuitabilityQuestions[ii].Text</p>
                             @foreach (var Answer in MicroserviceSuitabilityQuestions[ii].Answers)
                             {
@@ -98,9 +111,10 @@ else
                             }
                         </div>
                     </InputRadioGroup>
+                    <br />
                 }
             }
-
+            <br>
             <button class="btn btn-primary" type="submit">Submit</button>
         </AutoSaveEditForm>
     }
@@ -109,7 +123,7 @@ else
 {
     <h1>Results</h1>
 
-    <h2>What your project currently is</h2>
+    <h2>How your project is currently classified</h2>
 
     <p>Based on your answers it appears that your project is
         @if(questionaireModel.ProjetLifecycleStatus == ProjetLifecycle.New)
@@ -118,25 +132,25 @@ else
         }
         else
         {
-            <span>an existing project that appears to be some form of </span>
+            <span>an existing project that appears to </span>
             @if(questionaireModel.CurrentProjectArchStatus== CurrentProjectArch.Microservice)
             {
-                <span>microservices.</span>
+                <span>use some form of microservices.</span>
             }
             else if(questionaireModel.CurrentProjectArchStatus== CurrentProjectArch.Monolith)
             {
-                <span>Monolith.</span>
+                <span>be a type of Monolith.</span>
             }
         }
     </p>
 
     <h2>Your projects current suitability to microservices</h2>
-    <p>Based on analysis of your answers overall your project 
+    <p>Based on analysis of your answers, overall, your project 
             
         @if(questionaireModel.MicroserviceSuitabilityStatus== MicroserviceSuitability.Suitable)
         {
-            <span>does appear to be suitable for microservices </span>
-                <p>The reasons for this are</p>
+            <span>does appear to be suitable for the microservices </span>
+                <p>The reasons for this are:</p>
             <ul>
                 @foreach(var reason in questionaireModel.ReasonsWhy)
                 {
@@ -157,12 +171,12 @@ else
         }
         else
         {
-            <span>does not appear to be suitable for microservices</span>
+            <span>does not appear to be the best fit for microservices</span>
             <p>The reasons for this are</p>
             <ul>
                 @foreach(var reasonWhyNot in questionaireModel.ReasonsWhyNot)
                 {
-                    <li>reasonWhyNot</li>
+                    <li>@reasonWhyNot</li>
                 }   
             </ul>
             if (questionaireModel.ReasonsWhy.Any())
@@ -266,10 +280,10 @@ else
 
     private QuestionaireModel questionaireModel = new QuestionaireModel();
 
+    [QuestionAnsweredValidator("Please ensure you answer all questions")]
     public class QuestionaireModel
     {
-        [System.ComponentModel.DataAnnotations.Required]
-        public List<Answer> LifeCycleAnswers { get; set; }
+         public List<Answer> LifeCycleAnswers { get; set; }
 
         public List<Answer> CurrentArchAnswers { get; set; }
 
