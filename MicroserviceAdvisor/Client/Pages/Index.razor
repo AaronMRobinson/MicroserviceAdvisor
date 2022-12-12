@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject NavigationManager NavigationManager 
 
 <PageTitle>Home</PageTitle>
 
@@ -7,3 +8,10 @@
 <p>The goal of the microservice advisor is to give architects and developers advice about what kind of project they currently have, their suitable for the microservices approach and to identify tailored strategies that could help you to design, build or transform your solutions appropriately to add maximum value based on the requirements of your project.</p>
 
 <SurveyPrompt Title="Do you build apps using the microservice approach?" />
+
+
+<button class="btn-primary" onclick="@Start">Start your projects assessment</button>
+
+@code{
+    public void Start() => NavigationManager.NavigateTo("/QuestionsPage");
+} 

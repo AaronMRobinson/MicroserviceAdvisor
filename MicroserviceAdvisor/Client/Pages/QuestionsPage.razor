@@ -193,27 +193,36 @@ else
         </p>
 
     <h2>Recommendations for your project</h2>
-    <p>Our recommendation to your project is that</p>
+    <p>Our recommendation to your project is that you</p>
 
     @switch (questionaireModel.MicroserviceSuggestion)
     {
         case SuggestionType.BuildAMicroservice:
-            <p>BuildAMicroservice</p>
+            <h3>Build a microservice</h3>
+
+            <p>As you are building a new application and have a high project suitability to microservices, we recommend that you design your application from the start with the microservices approach in mind so that you can best leverage its benefits.</p>
             break;
         case SuggestionType.BuildAMonolith:
-            <p>BuildAMonolith</p>
+            <h3>Build a Monolith</h3>
+            <p>As you are building a new application and have a low project suitability to microservices, we recommend that you design your application using a more monolithic approach but encourage domain driven design to ensure that components have single responsibilities. It may be worth splitting your application into groups of monolith applications if your application looks like it will be too unwieldly within a single application/ respository.</p>
             break;
         case SuggestionType.MergeMicroservice:
-            <p>MergeMicroservice</p>
+            <h3>Merge your microservices</h3>
+            <p>As you have an existing application that is classified as a microservice but with a low project suitability to microservices, we recommend that you could group your relevant micro applications into small domain-based monoliths to lower project complexity. This should particularly be done if the microservice approach is causing too many overheads and effort where low value is being returned. </p>
+            <p>If there are not many identified issues with the existing application being a microservice, then it may be worth considering rather than refactoring the existing salutation, to consider updating micro applications when new requirements come in.</p>
             break;
         case SuggestionType.PotentialMicroservicesImprovements:
-            <p>PotentialMicroservicesImprovements</p>
+            <h3>Work to improve your microservices</h3>
+            <p>As you have an existing application that is classified as a microservice and have high project suitability to microservices, we recommend that you continue to develop the application as a microservice.  </p>
             break;
         case SuggestionType.StayAMonolith:
-            <p>StayAMonolith</p>
+            <h3>Stay as a monolith but look to improve your application</h3>
+            <p>As you have an existing application that is classified as a monolith and have low project suitability to microservices, we recommend that you continue to develop the application as a monolith.  </p>
+            <p>However, we encourage domain driven design to ensure that components have single responsibilities. It may be worth splitting your application into groups of monolith applications if your application looks like it is getting too unwieldly to manage within a single application/ repository.</p>
             break;
         case SuggestionType.TransformIntoAMicroservice:
-            <p>TransformIntoAMicroservice</p>
+            <h3>Transform your monolith into a microservice</h3>
+            <p>As you have an existing application that is classified as a monolith and have high project suitability to microservices, we recommend that you transform your application to use the microservice approach.  </p>
             break;
         default:
             <p>Sorry, based on your answers we were unable to provide a suggestion.</p>
