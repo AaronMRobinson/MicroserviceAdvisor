@@ -129,6 +129,7 @@ namespace MicroserviceAdvisor.Server.Services
             }
         }
 
+
         public static SuggestionType SuggestionAnalyser(QuestionaireModel questionaireModel)
         {
             if(questionaireModel.ProjetLifecycleStatus == ProjetLifecycle.New)
