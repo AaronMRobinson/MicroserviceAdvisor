@@ -22,6 +22,9 @@ namespace MicroserviceAdvisor.Server.Services
             var reasonsAgainstMicroservice = new List<string>();
 
             QuestionaireModel.MicroserviceSuitabilityStatus = SuitabilityAnalyser(QuestionaireModel, questions, out reasonsForMicroservice, out reasonsAgainstMicroservice);
+            
+            var microserviceSuitabilityPercentage = Convert.ToDecimal(reasonsForMicroservice.Count) / Convert.ToDecimal(reasonsForMicroservice.Count + reasonsAgainstMicroservice.Count)*100;
+
             return new Result
             {
                 CurrentProjectArch = QuestionaireModel.CurrentProjectArchStatus,
@@ -30,7 +33,8 @@ namespace MicroserviceAdvisor.Server.Services
                 ReasonsWhy = reasonsForMicroservice,
                 ReasonsWhyNot = reasonsAgainstMicroservice,
                 SuggestionType = SuggestionAnalyser(QuestionaireModel),
-                ReasonsForTheSuggestion = new List<string> { "", "" }
+                ReasonsForTheSuggestion = new List<string> { "", "" },
+                MicroserviceSuitabilityPercentage = microserviceSuitabilityPercentage
             };
         }
 

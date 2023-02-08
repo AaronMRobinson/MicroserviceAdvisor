@@ -34,6 +34,7 @@ namespace MicroserviceAdvisor.Server.Controllers
             Model.MicroserviceSuggestion = results.SuggestionType;
             Model.ReasonsWhy = results.ReasonsWhy;
             Model.ReasonsWhyNot = results.ReasonsWhyNot;
+            Model.SuitabilityPercentage = results.MicroserviceSuitabilityPercentage;
             return Model;
         }
 

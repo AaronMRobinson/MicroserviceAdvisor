@@ -16,5 +16,11 @@
     <ProjectReference Include="..\Shared\MicroserviceAdvisor.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Questions\Questions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 
 </Project>

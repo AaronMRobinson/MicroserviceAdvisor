@@ -17,5 +17,7 @@ namespace MicroserviceAdvisor.Server.Models
         public SuggestionType SuggestionType { get; set; }
 
         public List<string>? ReasonsForTheSuggestion { get; set; }
+
+        public decimal MicroserviceSuitabilityPercentage { get; set; }
     }
 }

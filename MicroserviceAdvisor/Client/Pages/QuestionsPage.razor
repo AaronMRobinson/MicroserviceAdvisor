@@ -7,6 +7,7 @@
 @using MicroserviceAdvisor.Shared.Enums
 @using Newtonsoft.Json
 @inject HttpClient Http
+@inject NavigationManager NavigationManager 
 
 @if(questionaireModel.ProjetLifecycleStatus == ProjetLifecycle.Unknown)
 {
@@ -145,7 +146,7 @@ else
     </p>
 
     <h2>Your projects current suitability to microservices</h2>
-    <p>Based on analysis of your answers, overall, your project 
+    <p>Based on analysis of your answers, overall, your project has a microservice suitability percentage of <b>@questionaireModel.SuitabilityPercentage.ToString("0.##")%</b> which means your project
             
         @if(questionaireModel.MicroserviceSuitabilityStatus== MicroserviceSuitability.Suitable)
         {
@@ -201,33 +202,148 @@ else
             <h3>Build a microservice</h3>
 
             <p>As you are building a new application and have a high project suitability to microservices, we recommend that you design your application from the start with the microservices approach in mind so that you can best leverage its benefits.</p>
+            <p>Here are some benefits of building a microservice architecture instead of a monolithic architecture:</p>
+            <ul>
+                <li>Scalability: Microservices can be developed, deployed, and scaled independently, making it easier to handle increased loads.</li>
+                <li>Resilience: Microservices can continue to operate even if one or more services fail, increasing the overall resilience of the system.</li>
+                <li>Flexibility: Microservices allow different parts of a system to be built using different technologies and programming languages, providing more flexibility.</li>
+                <li>Faster deployment: Microservices can be deployed and updated independently, allowing for faster release cycles and quicker bug fixes.</li>
+                <li>Better resource utilization: Microservices can be deployed on different resources, such as different servers or cloud instances, allowing for better resource utilization.</li>
+                <li>Improved maintainability: Microservices can be developed, maintained, and retired individually, reducing the risk of a single change breaking the entire system.</li>
+                <li>Decoupled systems: Microservices decouple the different parts of a system, allowing for easier integration with other systems and technologies.</li>
+                <li>Granular access control: With microservices, you can have granular access control, making it easier to manage security and permissions.</li>
+            </ul>
+            <p>It's important to note that while there are many benefits to a microservice architecture, it can also be more complex and challenging to develop, test, and maintain compared to a monolithic architecture.</p>
+            
+            <p>Here are some tips to ensure the effectiveness of the microservice you are building:</p>
+            <ul>
+                    <li>Single Responsibility Principle: Ensure that each microservice has a clear, single responsibility and is loosely coupled with other microservices.</li>
+                    <li>Contract-First Design: Define the contracts between microservices before implementation to ensure that they can evolve independently.</li>
+                    <li>Automated Testing: Use automated tests to validate the behavior of microservices, including unit tests, integration tests, and end-to-end tests.</li>
+                    <li>Automated Testing: Use automated tests to validate the behavior of microservices, including unit tests, integration tests, and end-to-end tests.</li>
+                    <li>Versioning: Use versioning for microservices to ensure that clients can continue to work with an older version of a microservice while it is being updated.</li>
+                    <li>Deployment: Use continuous delivery and deployment processes to update microservices quickly and safely.</li>
+                    <li>Communication: Use lightweight communication protocols, such as HTTP/REST, to reduce latency and simplify inter-service communication.</li>
+                    <li>Resilience: Design microservices for failure by using techniques such as circuit breakers, retries, and bulkheads to ensure that a single microservice failure does not bring down the entire system.</li>
+             </ul> 
             break;
         case SuggestionType.BuildAMonolith:
             <h3>Build a Monolith</h3>
             <p>As you are building a new application and have a low project suitability to microservices, we recommend that you design your application using a more monolithic approach but encourage domain driven design to ensure that components have single responsibilities. It may be worth splitting your application into groups of monolith applications if your application looks like it will be too unwieldly within a single application/ respository.</p>
+            <p>Here are some benefits of building a solution monolithic instead of into microservices:</p>
+            <ul>
+                <li>Simplicity: Monolithic architectures are typically simpler to develop, test, and maintain, as all the code and components are in the same place.</li>
+                <li>Faster development: A monolithic architecture can lead to faster development, as developers can make changes to the entire system in a single place.</li>
+                <li>Easier testing: Testing a monolithic system can be simpler, as there is no need to test each microservice individually.</li>
+                <li>Better performance: A monolithic architecture can offer better performance, as there is less overhead from inter-service communication.</li>
+                <li>Improved security: Security can be easier to manage in a monolithic architecture, as there are fewer potential entry points for malicious actors.</li>
+                <li>Lower operational complexity: Monolithic architectures can have lower operational complexity, as there are fewer moving parts to manage and deploy.</li>
+                <li>Easier migration: Moving a monolithic system to a new platform or architecture can be simpler, as there are fewer components to consider.</li>
+            </ul>
+            <p>It's important to note that these benefits are not universal, and the decision to keep a solution monolithic or break it into microservices should be based on a thorough analysis of the specific requirements and constraints of the system.</p>
+
             break;
         case SuggestionType.MergeMicroservice:
             <h3>Merge your microservices</h3>
             <p>As you have an existing application that is classified as a microservice but with a low project suitability to microservices, we recommend that you could group your relevant micro applications into small domain-based monoliths to lower project complexity. This should particularly be done if the microservice approach is causing too many overheads and effort where low value is being returned. </p>
+
+            <p>Here are some benefits of building a solution monolithic instead of into microservices:</p>
+            <ul>
+                <li>Simplicity: Monolithic architectures are typically simpler to develop, test, and maintain, as all the code and components are in the same place.</li>
+                <li>Faster development: A monolithic architecture can lead to faster development, as developers can make changes to the entire system in a single place.</li>
+                <li>Easier testing: Testing a monolithic system can be simpler, as there is no need to test each microservice individually.</li>
+                <li>Better performance: A monolithic architecture can offer better performance, as there is less overhead from inter-service communication.</li>
+                <li>Improved security: Security can be easier to manage in a monolithic architecture, as there are fewer potential entry points for malicious actors.</li>
+                <li>Lower operational complexity: Monolithic architectures can have lower operational complexity, as there are fewer moving parts to manage and deploy.</li>
+                <li>Easier migration: Moving a monolithic system to a new platform or architecture can be simpler, as there are fewer components to consider.</li>
+            </ul>
+            <p>It's important to note that these benefits are not universal, and the decision to keep a solution monolithic or break it into microservices should be based on a thorough analysis of the specific requirements and constraints of the system.</p>
+
             <p>If there are not many identified issues with the existing application being a microservice, then it may be worth considering rather than refactoring the existing salutation, to consider updating micro applications when new requirements come in.</p>
             break;
         case SuggestionType.PotentialMicroservicesImprovements:
             <h3>Work to improve your microservices</h3>
             <p>As you have an existing application that is classified as a microservice and have high project suitability to microservices, we recommend that you continue to develop the application as a microservice.  </p>
+            <p>Here are some tips to ensure the effectiveness of a microservice:</p>
+            <ul>
+                    <li>Single Responsibility Principle: Ensure that each microservice has a clear, single responsibility and is loosely coupled with other microservices.</li>
+                    <li>Contract-First Design: Define the contracts between microservices before implementation to ensure that they can evolve independently.</li>
+                    <li>Automated Testing: Use automated tests to validate the behavior of microservices, including unit tests, integration tests, and end-to-end tests.</li>
+                    <li>Automated Testing: Use automated tests to validate the behavior of microservices, including unit tests, integration tests, and end-to-end tests.</li>
+                    <li>Versioning: Use versioning for microservices to ensure that clients can continue to work with an older version of a microservice while it is being updated.</li>
+                    <li>Deployment: Use continuous delivery and deployment processes to update microservices quickly and safely.</li>
+                    <li>Communication: Use lightweight communication protocols, such as HTTP/REST, to reduce latency and simplify inter-service communication.</li>
+                    <li>Resilience: Design microservices for failure by using techniques such as circuit breakers, retries, and bulkheads to ensure that a single microservice failure does not bring down the entire system.</li>
+             </ul> 
+
             break;
         case SuggestionType.StayAMonolith:
             <h3>Stay as a monolith but look to improve your application</h3>
             <p>As you have an existing application that is classified as a monolith and have low project suitability to microservices, we recommend that you continue to develop the application as a monolith.  </p>
             <p>However, we encourage domain driven design to ensure that components have single responsibilities. It may be worth splitting your application into groups of monolith applications if your application looks like it is getting too unwieldly to manage within a single application/ repository.</p>
+
+            <p>Here are some benefits of keeping a solution monolithic instead of breaking it into microservices:</p>
+            <ul>
+                <li>Simplicity: Monolithic architectures are typically simpler to develop, test, and maintain, as all the code and components are in the same place.</li>
+                <li>Faster development: A monolithic architecture can lead to faster development, as developers can make changes to the entire system in a single place.</li>
+                <li>Easier testing: Testing a monolithic system can be simpler, as there is no need to test each microservice individually.</li>
+                <li>Better performance: A monolithic architecture can offer better performance, as there is less overhead from inter-service communication.</li>
+                <li>Improved security: Security can be easier to manage in a monolithic architecture, as there are fewer potential entry points for malicious actors.</li>
+                <li>Lower operational complexity: Monolithic architectures can have lower operational complexity, as there are fewer moving parts to manage and deploy.</li>
+                <li>Easier migration: Moving a monolithic system to a new platform or architecture can be simpler, as there are fewer components to consider.</li>
+            </ul>
+            <p>It's important to note that these benefits are not universal, and the decision to keep a solution monolithic or break it into microservices should be based on a thorough analysis of the specific requirements and constraints of the system.</p>
             break;
         case SuggestionType.TransformIntoAMicroservice:
             <h3>Transform your monolith into a microservice</h3>
-            <p>As you have an existing application that is classified as a monolith and have high project suitability to microservices, we recommend that you transform your application to use the microservice approach.  </p>
+            <p>As you have an existing application that is classified as a monolith and have high project suitability to microservices, we recommend that you decouple your application to use the microservice approach.  </p>
+            <p>Here are some benefits of decoupling your monolith into a microservice:</p>
+            <ul>
+                <li>Scalability: Microservices can be developed, deployed, and scaled independently, making it easier to handle increased loads.</li>
+                <li>Resilience: Microservices can continue to operate even if one or more services fail, increasing the overall resilience of the system.</li>
+                <li>Flexibility: Microservices allow different parts of a system to be built using different technologies and programming languages, providing more flexibility.</li>
+                <li>Faster deployment: Microservices can be deployed and updated independently, allowing for faster release cycles and quicker bug fixes.</li>
+                <li>Better resource utilization: Microservices can be deployed on different resources, such as different servers or cloud instances, allowing for better resource utilization.</li>
+                <li>Improved maintainability: Microservices can be developed, maintained, and retired individually, reducing the risk of a single change breaking the entire system.</li>
+                <li>Decoupled systems: Microservices decouple the different parts of a system, allowing for easier integration with other systems and technologies.</li>
+                <li>Granular access control: With microservices, you can have granular access control, making it easier to manage security and permissions.</li>
+            </ul>
+            <p>It's important to note that while there are many benefits to a microservice architecture, it can also be more complex and challenging to develop, test, and maintain compared to a monolithic architecture.</p>
+            <p>Decoupling a monolithic solution into smaller autonomous components can bring several benefits including increased maintainability, scalability, and resiliency of the system. However, decoupling a monolithic solution requires careful consideration of the underlying technology and infrastructure. Factors such as data consistency, security, and scalability must be taken into account.</p>
+
+            <p>Domain-driven design (DDD): DDD is a popular approach that can be used to guide the process of componentisation. It involves identifying the core business domains within a monolithic application and defining the boundaries between them to create a set of independent services as shown in Figure 1. The core steps to achive this is to;</p>
+             <ul>
+                    <li>Identify the core domain: Start by identifying the key business processes and entities that represent the core of your business. These entities should be closely related to the value that your business delivers to its customers.</li>
+                    <li>Model the core domain: Use modeling techniques, such as class diagrams and entity-relationship diagrams, to represent the key entities and relationships in your core domain.</li>
+             </ul>   
+            <p>Rademacher et al (2018) argues that this approach has many benefits which include;</p>
+            <p>
+                <ul>
+                    <li>Bounded Context: DDD encourages defining clear boundaries between different parts of the system, which can be useful in breaking down a monolithic application into smaller, more manageable microservices.</li>
+                    <li>Separation of Concerns: DDD helps identify and separate different business domains, allowing for each microservice to focus on a single, well-defined area of functionality.</li>
+                    <li>Improved Communication: DDD emphasizes collaboration between developers, domain experts, and stakeholders, which can lead to better communication and understanding of the requirements for each microservice.</li>
+                    <li>Reusability: By modelling business concepts as entities and value objects, DDD enables code reuse and reduces the duplication of code and logic across microservices.</li>
+                    <li>Evolvability: DDD's focus on a deep understanding of the business domain can make it easier to evolve and adapt the system over time as business requirements change.</li>
+                </ul>
+                <img src=/Images/Figure1.png>
+            </p>
+            <p>Another approach augured by Mazlami, et al. (2017) is to use tooling to analyse source control histories to utilise coupling strategies. Logical coupling strategies are used to analyse the changing behaviour of the original monolith and then group files that are modified together as they would likely consequently also belong to the same microservice. Contributor coupling strategy use version control to identify an “ownership architecture” to identify team structures and communication patterns between teams of different components of the application to group an application into a logical set of teams.</p>
+            <p>For larger projects, a more measured approach may be required to incrementally introduce microservices and even dual-run them in parallel with their monolithic counterparts until full migration is appropriate.</p>
+            <img src=/Images/Figure2.png>
+            <p>Knoche and Hasselbring, (2018) define a migration process that splits an application step by step into microservices. This process defines an abstract service facade, adapts it, and migrates it as a target architecture. Using this in a real world microservice migration it was concluded that for large projects with a risky platform migration or complex applications with a high business value this approach was particularly recommended as the creation of the service facade allows for a very controlled, measured approach. However, for less risky, smaller platforms the effort involved to create throwaway implementations in the façade adaption stage in step B of Figure 2 would not be worth it.</p>
+            <h3>References</h3>
+            <p><ul>
+                    <li>Bucchiarone, A., Dragoni, N., Dustdar, S., Larsen, S.T. and Mazzara, M. (2018). From Monolithic to Microservices: An Experience Report from the Banking Domain. IEEE Software, 35(3), pp.50–55. doi:10.1109/ms.2018.2141026.</li>
+                    <li>Knoche, H. and Hasselbring, W. (2018). Using Microservices for Legacy Software Modernization. IEEE Software, 35(3), pp.44–49. doi:10.1109/ms.2018.2141035.</li>
+                    <li>Mazlami, G., Cito, J. and Leitner, P. (2017). Extraction of Microservices from Monolithic Software Architectures. 2017 IEEE International Conference on Web Services (ICWS). doi:10.1109/icws.2017.61.</li>
+                </ul></p>
             break;
         default:
             <p>Sorry, based on your answers we were unable to provide a suggestion.</p>
             break;
     }
+
+    <button class="btn-primary" onclick="@Restart">Try another project microservice suitability assessment</button>
 }
 
 @code {
@@ -287,12 +403,14 @@ else
         }
     }
 
+
+
     private QuestionaireModel questionaireModel = new QuestionaireModel();
 
     [QuestionAnsweredValidator("Please ensure you answer all questions")]
     public class QuestionaireModel
     {
-         public List<Answer> LifeCycleAnswers { get; set; }
+        public List<Answer> LifeCycleAnswers { get; set; }
 
         public List<Answer> CurrentArchAnswers { get; set; }
 
@@ -309,6 +427,8 @@ else
         public List<string>? ReasonsWhy { get; set; }
 
         public List<string>? ReasonsWhyNot { get; set; }
+
+        public decimal SuitabilityPercentage { get; set; }
     }
 
     public class Answer
@@ -317,6 +437,8 @@ else
         public int Value { get; set; }
         public QuestionCategory questionCategory { get; set; }
     }
+
+    public void Restart() => NavigationManager.NavigateTo("/");
 
     private async Task SubmitLifeCycle()
     {
