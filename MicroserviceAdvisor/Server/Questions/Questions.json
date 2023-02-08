@@ -294,7 +294,7 @@
         "Meaning": "Suitable"
       },
       {
-        "Name": "No my project uses agile methodologies",
+        "Name": "No my project does not use agile methodologies",
         "Conclusion": "Agile methdodologies are better suited to the use of microservices.",
         "Description": "Description A",
         "Value": 2,
