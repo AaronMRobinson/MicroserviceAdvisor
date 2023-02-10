@@ -2,7 +2,7 @@
   {
     "Name": "Question 1",
     "Id": 1,
-    "Text": "Where in the project lifecycle is your project currently at",
+    "Text": "Where in the project lifecycle is your project currently at?",
     "Category": "Lifecycle",
     "Answers": [
       {
@@ -20,25 +20,25 @@
   {
     "Name": "Question 1",
     "Id": 2,
-    "Text": "Which option best describes how is your application grouped and organised?",
+    "Text": "Which option best describes how your system is grouped and organised?",
     "Category": "CurrentArchType",
     "Answers": [
       {
-        "Name": "Repository per an application",
+        "Name": "One repository for each individual component of the system",
         "Conclusion": "Conclusion A",
         "Description": "Description A",
         "Value": 1,
         "Meaning": "Microservice"
       },
       {
-        "Name": "Repository per a group of applications",
+        "Name": "One repository for each group of components in a system",
         "Conclusion": "Conclusion A",
         "Description": "Description A",
         "Value": 2,
         "Meaning": "Microservice"
       },
       {
-        "Name": "One repository with all applications",
+        "Name": "A single repository with all components in the system",
         "Conclusion": "Conclusion B",
         "Description": "Description B",
         "Value": 3,
@@ -49,25 +49,25 @@
   {
     "Name": "Question 2",
     "Id": 3,
-    "Text": "Which option best describes the most granular deployment you can do",
+    "Text": "Which option best describes the most granular deployment you can do?",
     "Category": "CurrentArchType",
     "Answers": [
       {
-        "Name": "Every applications can be deployed individually",
+        "Name": "Every component can be deployed individually",
         "Conclusion": "Conclusion A",
         "Description": "Description A",
         "Value": 1,
         "Meaning": "Microservice"
       },
       {
-        "Name": "Groups of applications can be deployed together",
+        "Name": "Groups of components can be deployed together",
         "Conclusion": "Conclusion A",
         "Description": "Description A",
         "Value": 2,
         "Meaning": "Microservice"
       },
       {
-        "Name": "All applications need to be deployed as one unit",
+        "Name": "The entire system needs to be deployed as one unit",
         "Conclusion": "Conclusion B",
         "Description": "Description B",
         "Value": 3,
@@ -100,7 +100,7 @@
   {
     "Name": "Question 2",
     "Id": 5,
-    "Text": "How long is the expected lifespan of your project ",
+    "Text": "How long is the expected lifespan of your system?",
     "Category": "MicroserviceSuitability",
     "Answers": [
       {
@@ -129,18 +129,18 @@
   {
     "Name": "Question 3",
     "Id": 6,
-    "Text": "Is / will the application you are building part of a bigger eco system of applications or independent",
+    "Text": "Is / will the system you are building part of a bigger eco system of applications or independent?",
     "Category": "MicroserviceSuitability",
     "Answers": [
       {
         "Name": "Independent",
-        "Conclusion": "As the application you are building is independent with no direct connection to other applications it may be easier to build it as a more monolithic solution.",
+        "Conclusion": "As the system you are building is independent with no direct connection to other systems it may be easier to build it as a more monolithic solution.",
         "Description": "Description A",
         "Value": 1,
         "Meaning": "NotSuitable"
       },
       {
-        "Name": "Part of a bigger eco system of applicationd",
+        "Name": "Part of a bigger eco system of applications",
         "Conclusion": "As the application you are building is part of a wider suite of inter-connected applications it could be more valuable to develop the project as microservices.",
         "Description": "Description A",
         "Value": 2,
@@ -151,7 +151,7 @@
   {
     "Name": "Question 4",
     "Id": 7,
-    "Text": "Do you need your applications components to be individually scalable.",
+    "Text": "Do you need your systems components to be individually scalable?",
     "Category": "MicroserviceSuitability",
     "Answers": [
       {
@@ -239,7 +239,7 @@
   {
     "Name": "Question 8",
     "Id": 11,
-    "Text": "What best describes the structure of your team working on the project",
+    "Text": "What best describes the structure of your team working on the project?",
     "Category": "MicroserviceSuitability",
     "Answers": [
       {
@@ -305,7 +305,7 @@
   {
     "Name": "Question 11",
     "Id": 14,
-    "Text": "How frequent do you want/expect to have deployment",
+    "Text": "How frequent do you want/expect to have deployment?",
     "Category": "MicroserviceSuitability",
     "Answers": [
       {
